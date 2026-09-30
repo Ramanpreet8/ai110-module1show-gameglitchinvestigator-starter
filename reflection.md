@@ -47,11 +47,21 @@ I considered the bug fixed only after testing the full interaction: a completed 
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 
+When someone interacts with a Streamlit widget, Streamlit runs the app script again from top to bottom. Ordinary variables are recreated during that rerun, while values in `st.session_state` persist for that user's session. That is why a button callback can reset session state before the next run, and why leaving the old `won` status in state kept the game locked.
+
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+
+I want to keep writing a focused regression test for the exact bug I am fixing. The AppTest for this game reproduced a completed round, clicked New Game, and verified that another guess could be submitted. That gave me a repeatable check of the state transition instead of relying only on what I saw in the browser.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+
+Next time, I would give the assistant the reproduction steps, expected behavior, and relevant tests in the first prompt. I would ask for one scoped change at a time, review the diff, and run the focused test before moving to the next issue. That should make it easier to catch incomplete fixes while the change is still small.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+I now treat AI-generated code as a draft to verify, not as proof that a bug is fixed. In this project, tests and diff review exposed state-flow details that a plausible-looking code change could miss.
