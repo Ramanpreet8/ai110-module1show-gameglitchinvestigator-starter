@@ -25,28 +25,26 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] **Purpose:** Guess the secret number using the game's higher/lower hints before the attempt limit runs out.
+- [x] **Bugs found:** The higher/lower hints were reversed, guesses outside the selected range were accepted, and the completed-game status prevented New Game from accepting another guess. The debug panel can also display the previous score during the same run that calculates the final score.
+- [x] **Fixes applied:** Moved game rules into `logic_utils.py`, corrected hint directions, validated guesses against the selected difficulty, and reset the game state and input when New Game is clicked. The debug-score display issue remains marked with a `FIXME` in `app.py`.
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. Start the app with `python -m streamlit run app.py`, select a difficulty, and expand **Developer Debug Info** to see the secret number and allowed range.
+2. Enter a valid guess below the secret. The game reports **Too Low** and, when **Show hint** is enabled, prompts you to go higher.
+3. Enter a valid guess above the secret. The game reports **Too High** and prompts you to go lower.
+4. Enter a number outside the selected difficulty's range, such as `101` in Normal mode. The game rejects it with a range-validation message.
+5. Enter the secret number to win. Then select **New Game**; the score, attempts, history, and input reset, and another guess can be submitted without refreshing the page.
 
 ## 🧪 Test Results
 
-```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+```text
+$ ./.venv/bin/python -m pytest -q
+......                                                                   [100%]
+6 passed in 1.07s
 ```
 
 ## 🚀 Stretch Features
